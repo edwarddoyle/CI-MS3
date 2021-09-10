@@ -299,6 +299,10 @@ a
 	text-decoration: none;
     color: var(--text2);
 }
+
+.suchEmpty {
+  margin: auto;
+}
   
 body,
 html {
@@ -501,7 +505,7 @@ nav img {
         background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/map.jpg')no-repeat center center fixed;
         background-size: cover;
         overflow: hidden;
-        height: auto;
+        min-height: 100vh;
         padding: 0 1rem;
     }
 
@@ -563,9 +567,17 @@ nav img {
 
   
     .row {
-      display: flex;
+      /* display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-between; */
+
+      display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: var(--surface2);
     }
   
     label {
@@ -686,13 +698,21 @@ nav img {
 
 
       /* event5s */
+      .eventHeader {
+        font-size: .75rem;
+        padding: 1rem;
+        text-align: justify;
+
+      }
+      /* https://uigradients.com/ */
 
       .events {
               display: flex;
     flex-flow: row wrap;
-    height: 100vh;
+
     width: 100vw;
     padding: 1rem;
+    background: var(--surface2);
       }
 /* credit:  https://codepen.io/nailaahmad/pen/LGRxWJ */
       .eventCard {
@@ -700,6 +720,8 @@ nav img {
         width: calc((100% / 3) - 30px);
         transition: all 0.2s ease-in-out;
       }
+
+
 
       @media screen and (max-width: 991px) {
         .eventCard {
@@ -714,27 +736,55 @@ nav img {
 
 
 
-    .eventCard:hover .card__inner{  
-        background-color: turquoise;        
+    .eventCard.is-collapsed:hover .card__inner{  
+        /* background-color: turquoise;         */
         transform: scale(1.05);
     }      
 
-    .eventCard .card__inner {
+    /* .eventCard .card__inner {
       background-color: #1abc9c;
-    }
+    } */
     
     .card__inner {
         width: 100%;
         padding: 30px;
         position: relative;
         cursor: pointer;
-        background-color: #949fb0;
-        color: #eceef1;
         font-size: 1.5em;
         text-transform: uppercase;
         text-align: center;
         transition: all 0.2s ease-in-out;
     }
+
+    /* .card__inner.cleanup{
+      background: -webkit-linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('../img/hero.jpg') center center no-repeat;
+      background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('../img/hero.jpg') center center no-repeat;
+      background-size: cover;
+      color: var(--text2);
+      border: thin solid var(-text1);
+    } */
+
+    .cleanup{
+      background: #00B4DB;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+     
+    }
+
+    .planting {
+      background: #CB356B;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #BD3F32, #CB356B);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+    .project {
+      background: #AAFFA9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #11FFBD, #AAFFA9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
     .eventCard:hover .card__inner {
       transform: scale(1);
    }
@@ -747,10 +797,10 @@ nav img {
       width: 0;
       position: absolute;
       bottom: -30px;
-      left: calc(50% - 15px);
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 15px solid #333a45;
+      left: calc(50% - 1rem);
+      border-left: 1rem solid transparent;
+      border-right: 1rem solid transparent;
+      border-bottom: 1rem solid var(--surface4);
     }
 
     .card__inner:after {
@@ -771,8 +821,6 @@ nav img {
     overflow: visible;
     margin-top: 30px;
     opacity: 1;
-
-
   }
 
   .eventCard.is-collapsed .card__inner:after{
@@ -782,15 +830,37 @@ nav img {
   
   .card__expander {
       transition: all 0.2s ease-in-out;
-      background-color: #333a45;
+      background-color: var(--surface4);
       width: 100%;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      text-transform: uppercase;
-      color: #eceef1;
-      font-size: 1.5em;
+      padding: .5rem;
+      /* text-transform: uppercase;
+      color: #eceef1; */
+  }
+
+  .card__expander ol {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .card__expander ol li{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    font-size: .75rem;
+    margin: .5rem 0;
+  }
+
+  .card__expander ol li i{
+    margin-right: .5rem;
+    font-size: 1rem;
+    color: var(--brand);
   }
 
   @media screen and (min-width: 992px) {

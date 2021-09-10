@@ -50,3 +50,5 @@ export let getSiblings = function (e) {
   }
   return siblings;
 };
+
+export const RETURNING_VISITOR = localStorage.getItem("returningVisitor") ? true : false;
