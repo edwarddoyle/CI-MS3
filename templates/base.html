@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="{{ url_for('static', filename='img/site/favicon.svg') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='img/site/mask-icon.svg') }}" color="#000000">
+    <link rel="apple-touch-icon" href="assets/img/site/apple-touch-icon.png">
+    <link rel="manifest" href="{{ url_for('static',filename='manifest.json') }}" crossorigin="use-credentials">
+    <title>KCC App</title>
+    <link onload="this.rel='stylesheet'" rel="preload" as="style"
+        href="{{ url_for('static',filename='css/style.css') }}" media="all" />
+</head>
+
+<body class="fancy-border">
+    <nav class="rad-shadow">
+        <a href="{{ url_for('home') }}"><img class="slideInDown" src="{{ url_for('static', filename='img/site/kcc.svg') }}" width="90" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
+        </a>
+        <ol>
+            {% if not session.logged_in %}
+            <li><i class="icon-sign-in"></i> Log In</li>
+            {% else %}
+            <li><a href="{{ url_for('reports') }}"><i class="icon-reports"></i>Reports</a></li>
+            <li><i class="icon-sign-out"></i> Log out</li>
+            {% endif %}
+            <li><a href="{{ url_for('get_events') }}"><i class="icon-events"></i> Events </a></li>
+            <li><a href="{{ url_for('about') }}"><i class="icon-about"></i> About </a></li>
+            <li><a href="{{ url_for('contact') }}"><i class="icon-contact"></i> Contact </a></li>
+        </ol>
+        <button class="slideInDown">
+            <span></span>
+        </button>
+    </nav>
+    <main>
+
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block script %}
+    {% endblock %}
+</body>
+
+</html>
