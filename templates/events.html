@@ -1,30 +1,55 @@
 {% extends "base.html" %}
+{% block title %}Events - KCC{% endblock %}
 {% block content %}
+<div class="row">
+  <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
+  <h2>Events</h2>
+  <hr class="fancy-border" />
+  <p class="eventHeader">Throughout the year the Kilmacow Community Clean-up group organises various activities and
+    events. These range from painting, bulb and flower planting, mini projects and litter
+    picking.
+    The aim of these events is to bring together members of the community from all walks of
+    life, to
+    promote inclusion and community spirit, all the while improving the aesthetic and
+    cleanliness of
+    the community. We encourage and invite people of all ages to attend.
+</p>
+</div>
+<!-- style="align-self: flex-start; padding: 1rem; background: var(--surface2)" -->
+<div class="box slideInRight" >
+<img src="static/img/hero.jpg" max-width="300"/>
+</div>
 
+
+</div>
 {% if length > 0 %}
+<section class="events">
 
-
-<section class="events"> 
       {% for event in events %}
 <!-- name, date, attendees, location, type, description-->
-      <div class="eventCard is-collapsed" id="ed">
-        <div class="card__inner [ js-expander ]">
-            <span>{{ event.name }}</span>
-            <i class="fa fa-folder-o"></i>
+      <div class="eventCard is-collapsed " id="ed">
+        <div class="card__inner {{ event.type }}  regular-shadow">
+          <ol>
+            <li>{{ event.date }}</li>
+            <li>{{ event.name }}</li>
+          </ol>
           </div>
 
           <div class="card__expander">
-            <i class="fa fa-close [ js-collapser ]"></i>
-            {{ event.description }}
+            <ol>
+              <li><i class="icon-address"></i><span>{{ event.location }}</span></li>
+              <li><i class="icon-clock"></i><span>{{ event.time }}</span></li>
+              <li><i class="icon-person"></i><span>{{ event.attendees }}</span></li>
+              <li><i class="icon-info"></i><span>{{ event.description }}</span></li>
+            </ol>           
           </div>
     </div>
       {% endfor %}
 
 {% else %}
-<img class="slideInDown suchEmpty" src="{{ url_for('static', filename='img/site/kcc.svg') }}" width="90" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
+<img class="slideInDown suchEmpty" src="{{ url_for('static', filename='img/events.svg') }}" width="300" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
 {% endif %}
 </section>
-
 
 {% endblock %}
 
