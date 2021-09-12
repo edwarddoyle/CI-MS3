@@ -64,7 +64,6 @@
   }
   .icon-info:before {
     content: "\e90e";
-    margin-right: .25rem;
   }
   .icon-person:before {
     content: "\e90d";
@@ -72,10 +71,13 @@
   .icon-events:before {
     content: "\e901";
   }
+  .icon-clock:before {
+    content: "\e910";
+  }
   .icon-check:before {
     content: "\e90f";
-    margin-right: .25rem;
   }
+  
   .icon-reports:before {
     content: "\e903";
   }
@@ -112,10 +114,7 @@
     color: var(--facebook-clr);
     margin-right: .5rem;
   }
-
-
- 
-  
+   
   * {
     /* brand foundation */
     --brand-hue: 200;
@@ -310,8 +309,8 @@ html {
   max-width: 100vw;
   font-family: "Roboto";
   font-size: 1rem;
-  font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
-  background-color: var(--surface1);
+  /* font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300))); */
+  background-color: var(--surface2);
   color: var(--text1);
   /* background-image: linear-gradient(
 12deg
@@ -329,6 +328,7 @@ main {
   min-height: 100vh;
   max-width: 100%;
   overflow-x: hidden;
+  background: var(--surface2);
   margin-top: 10vh;
 }
 
@@ -381,19 +381,30 @@ header section
 } */
 
 
-
 nav {
+  position: absolute;
+  z-index: 1;
+}
+nav, footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	height: 10vh;
 	width: 100vw;
     background: var(--surface2);
+    
 	/* box-shadow: var(--nav-shadow-top); */
 	padding: 0 1rem;
-	position: absolute;
+	
+}
+footer{
+  bottom: 0;
+
 }
 
+footer p {
+  margin: auto;
+}
 nav img {
     display: flex;
 }
@@ -496,22 +507,26 @@ nav img {
 	}
   
 
-    .contact {
+
+    section {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
-        flex-wrap: wrap;
-        background: -webkit-linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/map.jpg')no-repeat center center fixed;
-        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/map.jpg')no-repeat center center fixed;
-        background-size: cover;
+        /* flex-wrap: wrap; */
+        flex-flow: row wrap;
+
         overflow: hidden;
-        min-height: 100vh;
-        padding: 0 1rem;
+        /* min-height: 100vh; */
+        padding: 1rem;
+        width: 100vw;
     }
 
-    .contact form {
-        background: var(--surface2);
+    .contact {
+      background: -webkit-linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/map.jpg')no-repeat center center fixed;
+      background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/map.jpg')no-repeat center center fixed;
+      background-size: cover;
     }
+
 
     .box {
         display: flex;
@@ -545,10 +560,9 @@ nav img {
       padding: 1rem;
       box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.35);
       border-radius: 0.5rem;
-      background: var(--surface1);
+      background: var(--surface2);
       width: 30vw;
     }
-  
      
   
       form ol {
@@ -567,15 +581,13 @@ nav img {
 
   
     .row {
-      /* display: flex;
-      align-items: center;
-      justify-content: space-between; */
+ 
 
       display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     width: 100%;
     background: var(--surface2);
     }
@@ -585,9 +597,9 @@ nav img {
       font-weight: 100;
     }
     
-    input, textarea{
+    /* input, textarea{
       font-family: 'KCC', 'roboto';
-    }
+    } */
     
     ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: var(--text2);
@@ -630,6 +642,7 @@ nav img {
       background: #FFF;
       border: thin solid var(--border);
       color: var(--text2);
+      font-family: 'KCC', 'roboto';
     }
   
     textarea::-webkit-outer-spin-button,
@@ -662,7 +675,6 @@ nav img {
       background-color: var(--brand);
       border: thin solid var(--surface2);
       padding: 1rem;
-      width: 60%;
       margin-top: 1rem;
       transition: 0.3s;
       border-radius: 0.25rem;
@@ -675,6 +687,10 @@ nav img {
       color: var(--brand);
       border: thin solid var(--brand);
       cursor: pointer;    
+    }
+
+    .button i {
+      margin-right: 1rem;
     }
     
     .spinner {
@@ -692,28 +708,18 @@ nav img {
         border-radius: 100%;
       }
   
-      .errMsg {
-        color: var(--red);
-      }
+
 
 
       /* event5s */
-      .eventHeader {
+      .eventHeader, section.row p {
         font-size: .75rem;
         padding: 1rem;
         text-align: justify;
-
       }
       /* https://uigradients.com/ */
 
-      .events {
-              display: flex;
-    flex-flow: row wrap;
 
-    width: 100vw;
-    padding: 1rem;
-    background: var(--surface2);
-      }
 /* credit:  https://codepen.io/nailaahmad/pen/LGRxWJ */
       .eventCard {
         margin: 15px;
@@ -723,16 +729,7 @@ nav img {
 
 
 
-      @media screen and (max-width: 991px) {
-        .eventCard {
-          width: calc((100% / 2) - 30px);
-       }
-     }
-      @media screen and (max-width: 767px) {
-        .eventCard {
-          width: 100%;
-       }
-     }
+
 
 
 
@@ -862,6 +859,27 @@ background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, F
     font-size: 1rem;
     color: var(--brand);
   }
+
+  @media screen and (max-width: 991px) {
+    .eventCard {
+      width: calc((100% / 2) - 30px);
+   }
+ }
+  @media screen and (max-width: 767px) {
+    .eventCard {
+      width: 100%;
+   }
+ }
+ @media screen and (max-width: 800px) {
+  .box {
+    width: 90%;
+  }
+  .button {
+      width: 60%;
+
+  }
+
+}
 
   @media screen and (min-width: 992px) {
     .eventCard:nth-of-type(3n+2) .card__expander {
@@ -1020,9 +1038,3 @@ background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, F
 
 
 
-      @media screen and (max-width: 800px) {
-        .box {
-          width: 90%;
-        }
-
-      }
