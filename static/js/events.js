@@ -1,4 +1,4 @@
-import {showLoadingButton, hideLoadingButton, displayError, displaySuccess, getSiblings} from "./utils.js";
+import {getSiblings} from "./utils.js";
 
 const cards = document.querySelectorAll('.eventCard');
 
