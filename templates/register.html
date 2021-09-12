@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}KCC{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
+        <h2>Register</h2>
+        <hr class="fancy-border" />
+    </div>
+</div>
+
+<section class="register">
+
+    <form id="registerForm" method="POST" action="{{url_for('register')}}" class="box regular-shadow slideInRight"
+        autocomplete="off">
+        <ol>
+            <li>
+                <h3>Register</h3>
+                <p id="loginButton" class="lightText">Have Account? Sign in</p>
+            </li>
+            <li><label for="lname">Username:</label>
+                <input type="text" name="fname" id="fname" placeholder="&#xe90d;  eg. Joe" required autofocus
+                    autocomplete="name" /></li>
+            <li>
+            <li><label for="password">Password:</label>
+                <input type="password" name="password" id="registerPass" placeholder="&#xe905;" required
+                    autocomplete="new-password" />
+                <i class="icon-eye"></i></li>
+            <li><label for="passwordConfirm">Confirm Password:</label>
+                <input type="password" name="passwordConfirm" id="registerPassConfirm" placeholder="&#xe905;" required
+                    autocomplete="new-password" />
+                <i class="icon-eye"></i></li>
+            <p class="errorMsg" id="formMsg"></p>
+            </li>
+            <li>
+                <button type="submit" id="regButton">REGISTER</button>
+            </li>
+        </ol>
+    </form>
+
+</section>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/register.js') }}" type="module" async></script>
+{% endblock %}

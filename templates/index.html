@@ -5,14 +5,46 @@
         <section class="header-content">
                             <p>Welcome to the</p>
                             <h1>Kilmacow Community Cleanup Group</h1>
-                            <p class="pb-4">We are a community based clean up group based in Kilmacow, South Kilkenny
+                            <p>We are a community based clean up group based in Kilmacow, South Kilkenny
                             </p>
-                            <div class="btn-toolbar">
-                                <a href="#about" class="btn btn-outline-primary pull-center white">About Us <i
-                                        class="fas fa-angle-right fa-sm"></i></a>
-                                <a href="#contact" class="btn btn-outline-primary">Contact Us <i
-                                        class="fas fa-angle-right fa-sm"></i></a>
-                            </div>
+                            {% if not session.logged_in %}
+                            <a href="{{ url_for('login') }}"><button class="button" ><i class="icon-sign-in"></i><span>Log In</span></button></a>
+                            {% endif %}
+
                         </section>
     </header>
+    <section class="row">
+        <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
+            <h2>About</h2>
+            <hr class="fancy-border" />
+<p>The Kilmacow Community Clean up group began in 2009 as a response to the litter being dumped
+                            along the roadside of the village and surrounding areas. It started with two community
+                            members gathering litter on their daily walk. Over the years the group grew in members and
+                            eventually evolved into an annual clean up event open to all members of community. Today,
+                            the KCC organises multiple events and activities throughout the year including, the annual
+                            spring clean, flower planting days, painting days, river cleaning days and mini projects.
+                        </p>
+                        <p>
+
+                            The KCC has no formal committee or membership, we consider everyone who participates in
+                            anyway as equals. The KCC prides itself on its goals of inclusion and participation for as
+                            many community members from as many diverse backgrounds as possible. All events we organise
+                            are open to all members of the community, and we welcome new participants at all events.
+                        </p>
+                        <p>
+
+                            The efforts of the Kilmacow Community Clean up group has helped the village gain recognition
+                            and awards for the community including, overall winners of “category seven – Community
+                            Wellbeing” in the IPB Pride of Place awards 2019. Details of the award are available <a
+                                href=" https://prideofplace.ie/portfolio-item/category-seven-community-wellbeing/"
+                                target="_blank" rel="noopener" aria-describedby="new-window-message"
+                                aria-label="opens in new tab">here <i class="fas fa-external-link-alt"></i></a>
+                        </p>
+          </div>
+          <!-- style="align-self: flex-start; padding: 1rem; background: var(--surface2)" -->
+          <div class="box slideInRight" >
+          <img class="regular-shadow" src="static/img/hero.jpg" max-width="300"/>
+          </div>
+
+    </section>
 {% endblock %}
