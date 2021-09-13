@@ -13,10 +13,12 @@
     <link onload="this.rel='stylesheet'" rel="preload" as="style"
         href="{{ url_for('static',filename='css/style.css') }}" media="all" />
 </head>
- <!-- class="rad-shadow" -->
+
 <body class="fancy-border">
     <nav class="regular-shadow">
-        <a href="{{ url_for('home') }}"><img class="slideInDown" src="{{ url_for('static', filename='img/site/kcc.svg') }}" width="90" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
+        <a href="{{ url_for('home') }}"><img class="slideInDown"
+                src="{{ url_for('static', filename='img/site/kcc.svg') }}" width="90" loading="lazy"
+                alt="Kilmacow Community CLean Up Logo" />
         </a>
         <ol>
             {% if not session.logged_in %}
@@ -34,18 +36,15 @@
     </nav>
     <main>
 
-
         {% block content %}
         {% endblock %}
 
-
-
     </main>
-           <footer class="fancy-border">
-            <p>
-                &#169; KCC <span id="copyrightYear"></span></p>
-        </footer>
-         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <footer class="fancy-border">
+        <p>
+            &#169; KCC <span id="copyrightYear"></span></p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     {% block script %}
     {% endblock %}
     <script>
