@@ -8,7 +8,6 @@ if(cards){
 }) 
 }
 
-
 function toggleCard(e) {
     const el = e.currentTarget;
     el.classList.toggle('is-collapsed')

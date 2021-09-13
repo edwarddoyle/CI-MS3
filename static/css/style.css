@@ -114,6 +114,25 @@
     color: var(--facebook-clr);
     margin-right: .5rem;
   }
+
+  .icon-eye-slash:before {
+    content: "\e901";
+  }
+  .icon-eye:before {
+    content: "\e902";
+  }
+  .icon-eye, .icon-eye-slash {
+    border: thin solid var(--surface1);
+    padding: .5rem;
+    border-radius: .5rem;
+    cursor: pointer;
+  }
+  .icon-eye{
+    color: var(--brand);
+  }
+  .icon-eye-slash {
+    color: var(--text1);
+  }
    
   * {
     /* brand foundation */
@@ -218,11 +237,11 @@
     }
   }  
   
-  .green{
+  .green, .success{
     color: var(--green);
   }
   
-  .red {
+  .red, .error {
     color: var(--red);
   }
   
@@ -514,6 +533,7 @@ nav img {
         justify-content: space-evenly;
         /* flex-wrap: wrap; */
         flex-flow: row wrap;
+        margin: auto;
 
         overflow: hidden;
         /* min-height: 100vh; */
@@ -725,6 +745,10 @@ nav img {
         margin: 15px;
         width: calc((100% / 3) - 30px);
         transition: all 0.2s ease-in-out;
+      }
+
+      .is-hidden{
+        opacity: 0;
       }
 
 

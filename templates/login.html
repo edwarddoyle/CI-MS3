@@ -3,19 +3,19 @@
 {% block content %}
 <div class="row">
     <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
-        <h2>Register</h2>
+        <h2>Log In</h2>
         <hr class="fancy-border" />
     </div>
 </div>
 
 <section class="register">
 
-    <form id="registerForm" method="POST" action="{{url_for('register')}}" class="box regular-shadow slideInRight"
+    <form id="registerForm" method="POST" action="{{url_for('login')}}" class="box regular-shadow slideInRight"
         autocomplete="off">
         <ol>
             <li>
-                <h3>Register</h3>
-                <p class="lightText"><a href="{{ url_for('login') }}">Have an account? Sign in</a></p>
+                <h3>Log In</h3>
+                <p class="lightText"><a href="{{ url_for('register') }}">No account? Sign Up</a></p>
             </li>
             <li><label for="username">Username:</label>
                 <input type="text" name="username" id="username" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe90d;  eg. JoeBloggs1" required autofocus
@@ -36,7 +36,7 @@
             
             </li>
             <li>
-                <button type="submit" id="regButton">REGISTER</button>
+                <button type="submit" id="regButton">LOGIN</button>
             </li>
         </ol>
     </form>

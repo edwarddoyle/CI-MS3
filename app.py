@@ -28,14 +28,51 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("/register.html")
+    if request.method == "POST":
+        # check if user exists
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+        if existing_user:
+            flash("Username already exists", category="error")
+            return redirect(url_for("register"))
+
+        register = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register)
+
+        # session the user
+        session["user"] = request.form.get("username").lower()
+        flash("Registered Successfully", category="success")
+
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # check if user exists
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if existing_user:
+            if check_password_hash(
+                existing_user["password"], request.form.get("password")):
+                        session["user"] = request.form.get("username").lower()
+                        flash("Welcome, {}".format(
+                            request.form.get("username")))
+            else:
+                flash("Incorrect Username and/or Password", category="error")
+                return redirect(url_for("login"))
+
+        else:
+            flash("Incorrect Username and/or Password", category="error")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
 
 
 @app.route("/events")

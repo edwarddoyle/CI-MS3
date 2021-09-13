@@ -20,7 +20,7 @@
         </a>
         <ol>
             {% if not session.logged_in %}
-            <li><a href="{{ url_for('register') }}"><i class="icon-sign-in"></i> Log In</a></li>
+            <li><a href="{{ url_for('login') }}"><i class="icon-sign-in"></i>Log In</a></li>
             {% else %}
             <li><a href="{{ url_for('reports') }}"><i class="icon-reports"></i>Reports</a></li>
             <li><i class="icon-sign-out"></i> Log out</li>
