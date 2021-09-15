@@ -1,103 +1,99 @@
-import {getSiblings, toggleCard, handleFiles, filesToUpload} from "./utils.js";
+import {
+  showLoadingButton,
+  removeEditable,
+  setEditable,
+  changeButtonText,
+  addToFilestoSwiper,
+  enableButton
+} from "./utils.js";
+
+const filesToUpload = [];
+
 
 // IMAGE POP PREVIEW
 document.querySelector('main').classList.add('reportsPage')
+
 let popImages = document.querySelectorAll('.popImage');
 const modal = document.querySelector('.show');
 const poppedImage = document.querySelector('.img-show') ?? 0;
 
+
 [...popImages].forEach(img => {
-    img.addEventListener("click", function () {
-        let source = img.getAttribute("src");
-        modal.querySelector("img").setAttribute("src", source)
-        modal.classList.remove('out');
-        modal.classList.add('in');
-    })
+  img.addEventListener("click", function () {
+    let source = img.getAttribute("src");
+    modal.querySelector("img").setAttribute("src", source)
+    modal.classList.remove('out');
+    modal.classList.add('in');
+  })
 })
 
 if (poppedImage) {
-    poppedImage.addEventListener("click", () => {
-        modal.classList.add('out');
-        modal.classList.remove('in');
-        modal.querySelector("img").setAttribute("src", "")
-    })
+  poppedImage.addEventListener("click", () => {
+    modal.classList.add('out');
+    modal.classList.remove('in');
+    modal.querySelector("img").setAttribute("src", "")
+  })
 }
 
 // EDIT REPORT
 let editButton = document.querySelectorAll(".button.edit");
 [...editButton].forEach(btn => {
-    btn.addEventListener("click", function () {
-        let targetReport = document.getElementById(btn.dataset.target).querySelector('[data-form="report_desc"]');
-        if (btn.textContent == "EDIT") {
-            setEditable(targetReport)
-            changeButtonText(btn, "UPDATE")
-            changeButtonText(btn.parentNode.nextElementSibling.firstChild, "CANCEL")
-        } else if (btn.textContent == "UPDATE") {
-            const postObj = {
-                _id: btn.dataset.target,
-                report_desc: targetReport.textContent
-            }
-            crudReport(postObj, "UPDATE")
-            removeEditable(targetReport)
-            changeButtonText(btn, "EDIT")
-            changeButtonText(btn.parentNode.nextElementSibling.firstChild, "DELETE")
-        }
-    })
+  btn.addEventListener("click", function () {
+    let targetReport = document.getElementById(btn.dataset.target).querySelector('[data-form="report_desc"]');
+    if (btn.textContent == "EDIT") {
+      setEditable(targetReport)
+      changeButtonText(btn, "UPDATE")
+      changeButtonText(btn.parentNode.nextElementSibling.firstChild, "CANCEL")
+    } else if (btn.textContent == "UPDATE") {
+      const postObj = {
+        _id: btn.dataset.target,
+        report_desc: targetReport.textContent
+      }
+      crudReport(postObj, "UPDATE")
+      removeEditable(targetReport)
+      changeButtonText(btn, "EDIT")
+      changeButtonText(btn.parentNode.nextElementSibling.firstChild, "DELETE")
+    }
+  })
 })
 
 // DELETE REPORT
 let deleteButton = document.querySelectorAll(".button.delete");
 [...deleteButton].forEach(btn => {
-    btn.addEventListener("click", function () {
-        let targetReport = document.getElementById(btn.dataset.target).querySelector('[data-form="report_desc"]');
-        if (btn.textContent == "DELETE") {
-            const postObj = {
-                _id: btn.dataset.target
-            }
-            crudReport(postObj, "DELETE")            
-        } else if (btn.textContent == "CANCEL") {
-            removeEditable(targetReport)
-            changeButtonText(btn, "DELETE")
-            changeButtonText(btn.parentNode.previousElementSibling.firstChild, "EDIT")
-        }
-    })
+  btn.addEventListener("click", function () {
+    let targetReport = document.getElementById(btn.dataset.target).querySelector('[data-form="report_desc"]');
+    if (btn.textContent == "DELETE") {
+      const postObj = {
+        _id: btn.dataset.target
+      }
+      crudReport(postObj, "DELETE")
+    } else if (btn.textContent == "CANCEL") {
+      removeEditable(targetReport)
+      changeButtonText(btn, "DELETE")
+      changeButtonText(btn.parentNode.previousElementSibling.firstChild, "EDIT")
+    }
+  })
 })
 
-function setEditable(targ) {
-    targ.contentEditable = true;
-    targ.classList.add('liveEdit')
-    targ.focus();
-}
-
-function removeEditable(targ) {
-    targ.contentEditable = false;
-    targ.classList.remove('liveEdit')
-}
-
-function changeButtonText(el, text) {
-    el.textContent = text;
-}
-
 // CRUD FUNCTIONS
-async function crudReport(myObject,action) {
-    try {
-        let url;
-        action === "UPDATE" ? url = "/update-report" : url = "/delete-report";        
-        let response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(myObject),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        if (response.ok) {
-            window.location.reload()
-        } else {
-            console.log('error')
-        }
-    } catch (error) {
-        console.log(error)
-    }
+async function crudReport(myObject, action) {
+  try {
+    let url;
+    action === "UPDATE" ? url = "/update-report" :
+      action === "CREATE" ? url = "/create-report" :
+      url = "/delete-report";
+    let response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(myObject),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    let data = await response.json();
+    window.location.reload()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // CREATE REPORT
@@ -107,25 +103,23 @@ const reportObject = new Object();
 
 
 showCreateForm.addEventListener("click", function () {
-    appHolder.replaceChildren();
-    displayReportForm()
-
-           // Add Values To Report Object
-           reportObject.id = Date.now();
-           reportObject.reportDate = new Date().toLocaleDateString("en-GB");
-           reportObject.images = [];
-
-    })
+  appHolder.replaceChildren();
+  displayReportForm()
+  reportObject.report_id = Date.now();
+  reportObject.report_date = new Date().toLocaleDateString("en-GB");
+  reportObject.report_images = [];
+})
 
 function displayReportForm() {
-    let reportFormHTML = `<form id="reportForm" class="feedbackForm" autocomplete="off" >
+  let reportFormHTML = `
+  <form id="reportForm"  class="feedbackForm" autocomplete="off" >
           <ol>
             <li><h3>New Report</h3></li>
             <li><label for="desc">Description</label>
                 <input type="text" name="desc" id="desc" />
             </li>
             <li class="flexEnd">
-                <input type="file" id="fileElem" name="images" accept="image/*" multiple/>
+                <input type="file" id="fileElem" name="images" accept="image/png, image/jpeg" multiple/>
                 <label class="button" for="fileElem"><i class="icon-camera"></i></label>
             </li>
           </ol>
@@ -137,70 +131,103 @@ function displayReportForm() {
           </div>
         </div>
         <div id="currentLocation"></div>
-           <ol>
+          <ol>
             <li class="flexEnd">
-              <button type="submit" id="submitReport">Submit</button>
+              <button class="button" id="submitReport">Submit</button>
             </li>
-          </ol>        
-   
-  </form>`;
+          </ol>          
+  </form>
+  `;
   appHolder.insertAdjacentHTML("afterbegin", reportFormHTML);
   document.querySelector('#desc').focus();
+
   let form = document.getElementById("reportForm")
+  const submitReport = document.querySelector('#submitReport')
+  const fd = new FormData();
 
-    // Validate Files on input change
-    let fileInput = form.querySelector('input[type="file"]');
-    fileInput.onchange = () => {
-      if (fileInput.files.length > 0) {
-        handleFiles(fileInput.files);
+  let fileInput = form.querySelector('label.button');
+  fileInput.addEventListener("click", () => {
+    showLoadingButton(submitReport);
+    submitReport.disabled = true;
+  })
+
+  let inputFile = form.querySelector('input[type="file"]');
+  inputFile.onchange = () => {
+    if (inputFile.files.length > 0) {
+      [...inputFile.files].forEach((file) => {
+        addToFilestoSwiper(file);
+        fd.append("file", file)
+        postToCloudinary(fd)
+        enableButton();
+      })
+    }
+  };
+
+  function postToCloudinary(e) {
+    const url = '/upload-image';
+    fetch(url, {
+      method: 'POST',
+      body: e,
+      headers: {
+        'enctype': 'multipart/form-data',
       }
-      filesToUpload.forEach((file, i) => {
-        reportObject.images.push(file);
-      });
-    };
-
-    const locationContainer = document.querySelector("#currentLocation");
-    (function getLocation() {
-      if (navigator.geolocation) {
-        let options = {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        };
-        navigator.geolocation.getCurrentPosition(getPosition, geoError, options);
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
       } else {
-        locationContainer.textContent =
-          "Geolocation is not supported by this browser.";
+        return Promise.reject(showToast("false", response.status));
       }
-    })();
-  
-    function getPosition(pos) {
-      let latitude = pos.coords.latitude;
-      let longitude = pos.coords.longitude;
-      let map = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=13&size=200x200&scale=2&maptype=roadmap&markers=color:red%7C${latitude},${longitude}%7Csize:tiny&key=AIzaSyCX2dNlnn4pLHJf5KTZSup4zqihJxb0c5I`;
-      let currentLocation = `<img loading="lazy" width="150" src="${map}"/>`;
-      locationContainer.insertAdjacentHTML("afterbegin", currentLocation);
-      reportObject.map = map;
+    }).then(data => {
+      filesToUpload.push(data.secure_url);
+    }).catch(function (error) {
+      console.log(error)
+    })
+  }
+
+  const locationContainer = document.querySelector("#currentLocation");
+  (function getLocation() {
+    if (navigator.geolocation) {
+      let options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      navigator.geolocation.getCurrentPosition(getPosition, geoError, options);
+    } else {
+      locationContainer.textContent =
+        "Geolocation is not supported by this browser.";
     }
-  
-    function geoError(err) {
-      locationContainer.textContent = `ERROR(${err.code}): ${err.message}`;
-      reportObject.map = "assets/images/nomap.svg";
-    }
+  })();
 
+  function getPosition(pos) {
+    let latitude = pos.coords.latitude;
+    let longitude = pos.coords.longitude;
+    let map = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=13&size=200x200&scale=2&maptype=roadmap&markers=color:red%7C${latitude},${longitude}%7Csize:tiny&key=AIzaSyCX2dNlnn4pLHJf5KTZSup4zqihJxb0c5I`;
+    let currentLocation = `<img loading="lazy" width="150" src="${map}"/>`;
+    locationContainer.insertAdjacentHTML("afterbegin", currentLocation);
+    reportObject.report_map = map;
+    reportObject.report_lat = latitude;
+    reportObject.report_long = longitude;
+  }
 
-        // after submit Loop over form to get values
-        [...form.elements].forEach((el) => {
-            if (el.type === "text") {
-              let name = String(el.name);
-              let value = el.value.trim();
-            //   emailBody = [...emailBody, { name: name, data: value }];
-              reportObject[`${name}`] = `${value}`;
-            }
-          });
+  function geoError(err) {
+    locationContainer.textContent = `ERROR(${err.code}): ${err.message}`;
+    reportObject.map = "assets/images/nomap.svg";
+  }
 
+  submitReport.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  
+    reportObject.report_images = filesToUpload;
 
+    [...form.elements].forEach((el) => {
+      if (el.type === "text") {
+        let name = String(el.name);
+        let value = el.value.trim();
+        reportObject[`${name}`] = `${value}`;
+      }
+    });
 
+    crudReport(reportObject, "CREATE")
+  });
 }

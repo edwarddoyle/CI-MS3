@@ -76,8 +76,7 @@
   }
   .icon-check:before {
     content: "\e90f";
-  }
-  
+  }  
   .icon-reports:before {
     content: "\e903";
   }
@@ -114,7 +113,6 @@
     color: var(--facebook-clr);
     margin-right: .5rem;
   }
-
   .icon-eye-slash:before {
     content: "\e901";
   }
@@ -154,10 +152,9 @@
     --covid-clr: #FFEE00;
     --events-clr: #6495ED;
     --gallery-clr: #C52C66;
-      --mainfnt-clr: #00202A;
-      --facebook-clr: #0071EB;
-      --twitter-clr: #247CB2;
-      --instagram-clr: #C32AA3;
+    --facebook-clr: #0071EB;
+    --twitter-clr: #247CB2;
+    --instagram-clr: #C32AA3;
  
     /* Fonts */
     --small: font-size;
@@ -195,14 +192,12 @@
   
     /*status colours*/
     --green-dark: hsl(var(--green-hue) calc(var(--green-saturation) / 2) calc(var(--green-lightness) / 1.5));
-    --red-dark: hsl(var(--red-hue) calc(var(--red-saturation) / 2) calc(var(--red-lightness) / 1.5));
-  
+    --red-dark: hsl(var(--red-hue) calc(var(--red-saturation) / 2) calc(var(--red-lightness) / 1.5));  
  }
   
   
   /* @media (prefers-color-scheme: light) { */
-  :root {
-  
+  :root {  
     --brand: var(--brand-light);
     --text1: var(--text1-light);
     --text2: var(--text2-light);
@@ -743,6 +738,13 @@ input[type="file"] {
     }
     
     button[type="submit"]:hover, button[type="submit"]:focus, .button:hover, .button:focus {
+      background-color: var(--surface2);
+      color: var(--brand);
+      border: thin solid var(--brand);
+      cursor: pointer;    
+    }
+
+    .button:disabled{
       background-color: var(--surface2);
       color: var(--brand);
       border: thin solid var(--brand);

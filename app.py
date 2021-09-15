@@ -120,6 +120,26 @@ def logout():
     return redirect(url_for("base"))
 
 
+@app.route("/create-report", methods=["POST"])
+def createReport():
+    if request.method == "POST":
+        req = request.get_json()
+        create = {
+            "report_desc": req["desc"],
+            "report_id": req["report_id"],
+            "report_date": req["report_date"],
+            "report_map": req["report_map"],
+            "report_user": session["user"],
+            "report_images": req['report_images'],
+            "report_long": req["report_long"],
+            "report_lat": req["report_lat"]}
+
+        result = reportsdb.insert_one(create)
+
+    res = make_response(jsonify({"message": result.acknowledged}), 200)
+    return res
+
+
 @app.route("/reports/<username>", methods=["GET", "POST"])
 def reports(username):
     username = users.find_one(
