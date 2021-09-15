@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Reports - KCC{% endblock %}
+{% block style %}
+<link rel="preload" href="https://unpkg.com/swiper@6.5.0/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">  
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
+    <h2>Reports</h2>
+    <span class="row nowrap reportHeader">
+      <div class="reportsUsername"><img src="https://avatars.dicebear.com/api/initials/{{ username }}.svg" width="20"
+        style="margin-right:.5rem">{{username}}</div>
+        <div class="reportsFunctions"><p>CREATE NEW REPORT</p></div>
+    </span>
+    <hr class="fancy-border" />
+  </div>
+</div>
+
+<section class="reports">
+{% if length > 0 %}
+  {% for report in reports %}
+
+  <article class="regular-shadow"
+    style="background: linear-gradient(rgba(255, 255, 255, 0.95),
+     rgba(255, 255, 255, 0.9)), 
+     url('https://maps.googleapis.com/maps/api/staticmap?center={{report.report_lat}},{{report.report_long}}&zoom=15&size=150x150&scale=2&maptype=roadmap&markers=color:red%7C{{report.report_lat}},{{report.report_long}}%7Csize:tiny&key=AIzaSyCX2dNlnn4pLHJf5KTZSup4zqihJxb0c5I') 
+     center center no-repeat;"
+     id="{{report._id}}"
+     >
+    
+    <ul>
+      <li class="row nowrap"><h3 data-form="edward" id="ed">Report: <em>{{report.report_date}}</em></h3></li>
+      <li class="row nowrap"><i class="icon-address"></i>
+        <p><a
+            href="https://www.google.com/maps/search/?api=1&query={{ report.report_lat }}%2C{{ report.report_long }}" target="_blank">Location <span>(Open in maps &#x2197;)</span></a>
+        </p>
+      </li>
+      <li class="row nowrap"><i class="icon-info"></i>
+        <p data-form="report_desc">{{ report.report_desc }}</p>
+      </li>
+      <li class="imageHolder">
+
+        {% for image in report.report_img %}
+        <img src="{{ image }}" width="50px" class="popImage">
+        {% endfor %}
+
+        <div class="show out">
+          <div class="img-show">
+            <span>X</span>
+            <img src="">
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ul class="row buttonBar">
+      <li><button class="button edit" data-target="{{report._id}}">EDIT</button></li>
+      <li><button class="button delete" data-target="{{report._id}}">DELETE</button></li>
+    </ul>
+  </article>
+
+  {% endfor %}
+
+
+  {% else %}
+  <img class="slideInDown suchEmpty" src="{{ url_for('static', filename='img/reports.svg') }}" width="300" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
+  {% endif %}
+</section>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/reports.js') }}" type="module" delay></script>
+{% endblock %}
