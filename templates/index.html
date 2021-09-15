@@ -3,12 +3,16 @@
     <!-- Header / Home -->
     <header id="header" class="header">
         <section class="header-content">
-                            <p>Welcome to the</p>
+                            <p>Welcome 
+                                {% if session.user %} 
+                                back {{ username }} 
+                                {% endif %} to the</p>
                             <h1>Kilmacow Community Cleanup Group</h1>
                             <p>We are a community based clean up group based in Kilmacow, South Kilkenny
                             </p>
-                            {% if not session.logged_in %}
-                            <a href="{{ url_for('login') }}"><button class="button" ><i class="icon-sign-in"></i><span>Log In</span></button></a>
+                            {% if not session.user %}
+                            <a href="{{ url_for('login') }}"><button class="button" ><i class="icon-sign-in"></i>
+                                Log In</button></a>
                             {% endif %}
 
                         </section>
@@ -43,7 +47,7 @@
           </div>
           <!-- style="align-self: flex-start; padding: 1rem; background: var(--surface2)" -->
           <div class="box slideInRight" >
-          <img class="regular-shadow" src="static/img/hero.jpg" max-width="300"/>
+          <img class="regular-shadow" src="{{ url_for('static', filename='img/hero.jpg') }}" max-width="300"/>
           </div>
 
     </section>

@@ -11,7 +11,7 @@
     <address class="box slideInLeft">
         <!-- <h2 class="display-4">Contact</h2>
         <hr class="fancy-border" /> -->
-        <a href="{{ url_for('home') }}"><img src="static/img/site/kcc.svg" width="200"
+        <a href="{{ url_for('index', username=session['user']) }}"><img src="static/img/site/kcc.svg" width="200"
                 alt="Kilmacow Community Cleanup Logo"></a>
         <p>Feel free to get in touch using any of the methods below, or please fill out the contact form
             and someone will be in touch</p>

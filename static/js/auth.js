@@ -11,3 +11,4 @@ document.querySelectorAll('.icon-eye').forEach(item => {
         }
     })
 })
+
