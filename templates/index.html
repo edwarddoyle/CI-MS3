@@ -7,20 +7,28 @@
                                 {% if session.user %} 
                                 back {{ username }} 
                                 {% endif %} to the</p>
-                            <h1>Kilmacow Community Cleanup Group</h1>
+                            <h1>Kilmacow Community Cleanup Group</h1>  
+                            {% if not session.user %}
                             <p>We are a community based clean up group based in Kilmacow, South Kilkenny
                             </p>
-                            {% if not session.user %}
-                            <a href="{{ url_for('login') }}"><button class="button" ><i class="icon-sign-in"></i>
-                                Log In</button></a>
+                            <a href="{{ url_for('login') }}"><button class="button"><i class="icon-sign-in"></i>
+                                Log In / Register</button></a>
+                            {% else %}
+                            <a href="{{ url_for('reports', username=session['user']) }}"><button class="button"><i class="icon-sign-in"></i>
+                                View Reports</button></a>
                             {% endif %}
 
                         </section>
+    </header> 
+    
+    
+    {% if not session.user %}
+    <header class="auxillaryHeader">
+            <h1>About</h1>
     </header>
-    <section class="row">
-        <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
-            <h2>About</h2>
-            <hr class="fancy-border" />
+    <section class="eventIntro">
+<article>    
+
 <p>The Kilmacow Community Clean up group began in 2009 as a response to the litter being dumped
                             along the roadside of the village and surrounding areas. It started with two community
                             members gathering litter on their daily walk. Over the years the group grew in members and
@@ -44,11 +52,11 @@
                                 target="_blank" rel="noopener" aria-describedby="new-window-message"
                                 aria-label="opens in new tab">here <i class="fas fa-external-link-alt"></i></a>
                         </p>
-          </div>
-          <!-- style="align-self: flex-start; padding: 1rem; background: var(--surface2)" -->
-          <div class="box slideInRight" >
-          <img class="regular-shadow" src="{{ url_for('static', filename='img/hero.jpg') }}" max-width="300"/>
-          </div>
+
+        </article>
+          <article>
+          </article>
 
     </section>
+    {% endif %}
 {% endblock %}

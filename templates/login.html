@@ -1,30 +1,27 @@
 {% extends "base.html" %}
 {% block title %}KCC{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
-        <h2>Log In</h2>
-        <hr class="fancy-border" />
-    </div>
-</div>
 
 <section class="register">
-
-    <form id="registerForm" method="POST" action="{{url_for('login')}}" class="box regular-shadow slideInRight"
+    <article>
+    <form id="registerForm" method="POST" action="{{url_for('login')}}" class="regular-shadow slideInRight"
         autocomplete="off">
         <ol>
             <li>
-                <h3>Log In</h3>
-                <p class="lightText"><a href="{{ url_for('register') }}">No account? Sign Up</a></p>
+                <h2>Log In</h3>
+                <p class="lightText"><a href="{{ url_for('register') }}">No account? <span>Sign Up</span></a></p>
             </li>
             <li><label for="username">Username:</label>
                 <input type="text" name="username" id="username" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe90d;  eg. JoeBloggs1" required autofocus
                     autocomplete="off"/></li>
-            <li>
+          
             <li><label for="password">Password:</label>
-                <input type="password" name="password" id="registerPass" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe905;" required
+                <div class="passwordContainer">
+                <input type="password" name="password" id="registerPass" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe913;" required
                     autocomplete="new-password" />
-                <i class="icon-eye"></i></li>
+                <i class="icon-eye"></i>
+            </div>
+            </li>
                         <!-- flash messages credit https://stackoverflow.com/questions/44569040/change-color-of-flask-flash-messages-->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -34,12 +31,13 @@
         {% endif %}
     {% endwith %}
             
-            </li>
+     
             <li>
                 <button type="submit" id="regButton">LOGIN</button>
             </li>
         </ol>
     </form>
+</article>
 
 </section>
 

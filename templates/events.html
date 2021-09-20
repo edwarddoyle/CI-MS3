@@ -1,26 +1,40 @@
 {% extends "base.html" %}
 {% block title %}Events - KCC{% endblock %}
 {% block content %}
-<div class="row">
-  <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
-  <h2>Events</h2>
-  <hr class="fancy-border" />
-  <p class="eventHeader">Throughout the year the Kilmacow Community Clean-up group organises various activities and
-    events. These range from painting, bulb and flower planting, mini projects and litter
-    picking.
-    The aim of these events is to bring together members of the community from all walks of
-    life, to
-    promote inclusion and community spirit, all the while improving the aesthetic and
-    cleanliness of
-    the community. We encourage and invite people of all ages to attend.
-</p>
-</div>
-<div class="box slideInRight" >
-<img src="static/img/hero.jpg" max-width="300"/>
-</div>
+
+<header class="auxillaryHeader">
+  <h1>Events</h1>
+</header>
+
+<!-- if user is not logged -->
+{% if not session.user %}
+<section class="eventIntro">
+  <article>
+    <p>The Kilmacow Community Clean up group began in 2009 as a response to the litter being dumped
+      along the roadside of the village and surrounding areas. It started with two community
+      members gathering litter on their daily walk. Over the years the group grew in members and
+      eventually evolved into an annual clean up event open to all members of community. Today,
+      the KCC organises multiple events and activities throughout the year including, the annual
+      spring clean, flower planting days, painting days, river cleaning days and mini projects.
+  </p>
+  <p>
+      The KCC has no formal committee or membership, we consider everyone who participates in
+      anyway as equals. The KCC prides itself on its goals of inclusion and participation for as
+      many community members from as many diverse backgrounds as possible. All events we organise
+      are open to all members of the community, and we welcome new participants at all events.
+  </p>
+
+  </article>
+
+  <article>
+
+  </article>
+
+</section>
+
+{% endif %}
 
 
-</div>
 {% if length > 0 %}
 <section class="events">
 

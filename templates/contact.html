@@ -1,27 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Contact - KCC{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="box slideInLeft" style="align-self: flex-start; padding: 1rem; background: var(--surface2)">
-    <h2>Contact</h2>
-    <hr class="fancy-border" />
-  </div>
-</div>
-<section class="contact">
-    <address class="box slideInLeft">
-        <!-- <h2 class="display-4">Contact</h2>
-        <hr class="fancy-border" /> -->
+<header class="auxillaryHeader">
+    <h1>Contact</h1>
+</header>
+
+<section>
+
+    <article>
         <a href="{{ url_for('index', username=session['user']) }}"><img src="static/img/site/kcc.svg" width="200"
                 alt="Kilmacow Community Cleanup Logo"></a>
+        <hr class="fancy-border" />
         <p>Feel free to get in touch using any of the methods below, or please fill out the contact form
             and someone will be in touch</p>
-        <ol class="contact-list">
+        <ol>
             <li><i class="icon-address"></i><a href="https://goo.gl/maps/Et6N1ZTts42FTnkc8" target="_blank">Upper
                     Kilmacow, Co. Kilkenny</a>
             </li>
             <li><i class="icon-phone"></i><a href="#">+353 12 345 6789</a></li>
             <li><i class="icon-email"></i><a href="#">contact@kcc.ie</a></li>
-            <li> 
+            <li>
                 <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-describedby="new-window-message"
                     aria-label="Facebook">
                     <i class="icon-facebook"></i>
@@ -36,34 +35,42 @@
                 </a>
             </li>
         </ol>
-    </address>
-    <form id="contactForm" class="box regular-shadow slideInRight" autocomplete="off">
-        <ol>
-            <li>
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="&#xe90d;" autocomplete="off" autocorrect="off"
-                    autocapitalize="none" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');"
-                    required />
-            </li>
-            <li>
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="&#xe905;" autocomplete="off" required />
-            </li>
-            <li>
-                <label for="message">Message</label>
-                <textarea form="contactForm" type="text" name="message" id="message" placeholder="&#xe90c;" rows="4"
-                    required></textarea>
-                <p class="formMsg"></p>
-            </li>
-            <li>
-                <button type="submit">SUBMIT</button>
-            </li>
-        </ol>
-    </form>
+    </article>
+
+    <article>
+        <form id="contactForm" class="regular-shadow slideInRight" autocomplete="off">
+            <ol>
+                <li>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="&#xe90d;" autocomplete="off" autocorrect="off"
+                        autocapitalize="none" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');"
+                        required />
+                    <p></p>
+                </li>
+                <li>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="&#xe905;" autocomplete="off" required />
+                </li>
+                <li>
+                    <label for="message">Message</label>
+                    <textarea form="contactForm" type="text" name="message" id="message" placeholder="&#xe90c;" rows="4"
+                        wrap="soft" required></textarea>
+                    <p class="formMsg"></p>
+                </li>
+                <li>
+                    <button type="submit">SUBMIT</button>
+                </li>
+            </ol>
+        </form>
+    </article>
+
 </section>
+
 {% endblock %}
 
 {% block script %}
+
 <script src="{{ url_for('static', filename='js/smtp.js') }}" async></script>
 <script src="{{ url_for('static', filename='js/contact.js') }}" type="module" async></script>
+
 {% endblock %}
