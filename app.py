@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from cloudinary.utils import cloudinary_url
+# from cloudinary.utils import cloudinary_url
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -101,8 +101,7 @@ def login():
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
 
-                return redirect(url_for(
-                        "reports", username=session["user"]))
+                return redirect(url_for("reports", username=session["user"]))
             else:
                 flash("Incorrect Username and/or Password", category="error")
                 return redirect(url_for("login"))
@@ -125,7 +124,7 @@ def createReport():
     if request.method == "POST":
         req = request.get_json()
         create = {
-            "report_desc": req["desc"],
+            "report_desc": req["report_desc"],
             "report_id": req["report_id"],
             "report_date": req["report_date"],
             "report_map": req["report_map"],
@@ -163,7 +162,7 @@ def updateReport():
             "report_desc": req["report_desc"]
         }
         result = reportsdb.update_one(
-           {'_id': ObjectId(req["_id"])}, {'$set': update}, upsert=False)
+            {'_id': ObjectId(req["_id"])}, {'$set': update}, upsert=False)
 
     res = make_response(jsonify({"message": result.acknowledged}), 200)
     return res
@@ -174,7 +173,7 @@ def deleteReport():
     if request.method == "POST":
         req = request.get_json()
         result = reportsdb.delete_one(
-           {'_id': ObjectId(req["_id"])})
+            {'_id': ObjectId(req["_id"])})
 
     print(result.deleted_count)
 
