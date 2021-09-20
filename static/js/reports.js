@@ -11,7 +11,7 @@ const filesToUpload = [];
 
 
 // IMAGE POP PREVIEW
-document.querySelector('main').classList.add('reportsPage')
+// document.querySelector('main').classList.add('reportsPage')
 
 let popImages = document.querySelectorAll('.popImage');
 const modal = document.querySelector('.show');
@@ -43,7 +43,7 @@ let editButton = document.querySelectorAll(".button.edit");
     if (btn.textContent == "EDIT") {
       setEditable(targetReport)
       changeButtonText(btn, "UPDATE")
-      changeButtonText(btn.parentNode.nextElementSibling.firstChild, "CANCEL")
+      changeButtonText(btn.nextElementSibling.firstChild, "CANCEL")
     } else if (btn.textContent == "UPDATE") {
       const postObj = {
         _id: btn.dataset.target,
@@ -52,7 +52,7 @@ let editButton = document.querySelectorAll(".button.edit");
       crudReport(postObj, "UPDATE")
       removeEditable(targetReport)
       changeButtonText(btn, "EDIT")
-      changeButtonText(btn.parentNode.nextElementSibling.firstChild, "DELETE")
+      changeButtonText(btn.nextElementSibling.firstChild, "DELETE")
     }
   })
 })
@@ -70,7 +70,7 @@ let deleteButton = document.querySelectorAll(".button.delete");
     } else if (btn.textContent == "CANCEL") {
       removeEditable(targetReport)
       changeButtonText(btn, "DELETE")
-      changeButtonText(btn.parentNode.previousElementSibling.firstChild, "EDIT")
+      changeButtonText(btn.previousElementSibling.firstChild, "EDIT")
     }
   })
 })
@@ -97,30 +97,36 @@ async function crudReport(myObject, action) {
 }
 
 // CREATE REPORT
-let showCreateForm = document.querySelector(".reportsFunctions");
-const appHolder = document.querySelector(".reports")
+let showCreateForm = document.querySelectorAll(".createReport, .floating-action-button");
+const appHolder = document.querySelector("main")
 const reportObject = new Object();
 
-
-showCreateForm.addEventListener("click", function () {
-  appHolder.replaceChildren();
-  displayReportForm()
-  reportObject.report_id = Date.now();
-  reportObject.report_date = new Date().toLocaleDateString("en-GB");
-  reportObject.report_images = [];
+[...showCreateForm].forEach(btn =>{
+  btn.addEventListener("click", function () {
+    appHolder.replaceChildren();
+    displayReportForm()
+    reportObject.report_id = Date.now();
+    reportObject.report_date = new Date().toLocaleDateString("en-GB");
+    reportObject.report_images = [];
+  })
 })
 
 function displayReportForm() {
   let reportFormHTML = `
-  <form id="reportForm"  class="feedbackForm" autocomplete="off" >
+  <section class="reports">
+  <article>
+  <button class="button delete closebutton">X</button>
+  <form id="reportForm"  class="reportform" autocomplete="off" >          
           <ol>
             <li><h3>New Report</h3></li>
             <li><label for="desc">Description</label>
-                <input type="text" name="desc" id="desc" />
+                <textarea
+                form="reportForm" type="text" name="report_desc" id="desc" placeholder="&#xe90c;" rows="8"
+                 wrap="soft" required/></textarea>
             </li>
             <li class="flexEnd">
                 <input type="file" id="fileElem" name="images" accept="image/png, image/jpeg" multiple/>
-                <label class="button" for="fileElem"><i class="icon-camera"></i></label>
+                <label class="button" for="fileElem"><i class="icon-email"></i>Add Photos</label>
             </li>
           </ol>
         <div class="swiperContainer">            
@@ -130,25 +136,40 @@ function displayReportForm() {
             <div class="swiper-button-prev"></div>
           </div>
         </div>
-        <div id="currentLocation"></div>
+        <div id="currentLocation">        
+        </div>
           <ol>
             <li class="flexEnd">
               <button class="button" id="submitReport">Submit</button>
             </li>
           </ol>          
   </form>
+  </article>
+  </section>
   `;
   appHolder.insertAdjacentHTML("afterbegin", reportFormHTML);
   document.querySelector('#desc').focus();
 
-  let form = document.getElementById("reportForm")
+  const form = document.getElementById("reportForm")
   const submitReport = document.querySelector('#submitReport')
+  const textArea = form.querySelector('textarea')
+  const closeButton = document.querySelector('button.closebutton')
   const fd = new FormData();
 
   let fileInput = form.querySelector('label.button');
   fileInput.addEventListener("click", () => {
+    sessionStorage.setItem("fileclick", true)
     showLoadingButton(submitReport);
     submitReport.disabled = true;
+    setTimeout(function(){enableButton(), sessionStorage.removeItem("fileclick")}, 5000);
+  })
+
+  textArea.onblur = () =>{
+    reportObject.report_desc = textArea.value;
+  }
+
+  closeButton.addEventListener("click", () => {
+    window.location.reload();    
   })
 
   let inputFile = form.querySelector('input[type="file"]');
@@ -160,6 +181,9 @@ function displayReportForm() {
         postToCloudinary(fd)
         enableButton();
       })
+    }
+    else if(inputFile.files.length = 0){
+      enableButton();
     }
   };
 
@@ -217,17 +241,7 @@ function displayReportForm() {
 
   submitReport.addEventListener("click", (e) => {
     e.preventDefault();
-
     reportObject.report_images = filesToUpload;
-
-    [...form.elements].forEach((el) => {
-      if (el.type === "text") {
-        let name = String(el.name);
-        let value = el.value.trim();
-        reportObject[`${name}`] = `${value}`;
-      }
-    });
-
     crudReport(reportObject, "CREATE")
   });
 }
