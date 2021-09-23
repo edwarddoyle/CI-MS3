@@ -6,7 +6,6 @@ from flask_cors import CORS, cross_origin
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-# from cloudinary.utils import cloudinary_url
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,6 +16,7 @@ if os.path.exists("env.py"):
 app = Flask(__name__)
 CORS(app)
 
+# db vars
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
@@ -24,13 +24,13 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-# Resources Collection
+# Events Collection
 eventsdb = mongo.db.events
 
-# Categories Collection
+# Users Collection
 users = mongo.db.users
 
-# Users Collection
+# Reports Collection
 reportsdb = mongo.db.reports
 
 
@@ -38,19 +38,17 @@ reportsdb = mongo.db.reports
 def base():
     return render_template("index.html")
 
-
+# home - logged in
 @app.route("/home/<username>")
-@app.route("/<username>")
 def index(username):
 
     if session["user"]:
         username = users.find_one(
             {"username": session["user"]})["username"]
-        return render_template("index.html", username=username)
-
+        return render_template("index.html", username=session["user"])
     return render_template("index.html")
 
-
+# get events
 @app.route("/events")
 @app.route("/get_events")
 def get_events():
@@ -58,12 +56,12 @@ def get_events():
     length = events.count()
     return render_template("events.html", events=events, length=length)
 
-
+# contact
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
-
+# register
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -80,14 +78,14 @@ def register():
         }
         users.insert_one(register)
 
-        # session the user
+        # add user session
         session["user"] = request.form.get("username").lower()
         flash("Registered Successfully", category="success")
         return redirect(url_for("reports", username=session["user"]))
 
     return render_template("register.html")
 
-
+# login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -99,8 +97,6 @@ def login():
             if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(request.form.get("username")))
-
                 return redirect(url_for("reports", username=session["user"]))
             else:
                 flash("Incorrect Username and/or Password", category="error")
@@ -112,13 +108,13 @@ def login():
 
     return render_template("login.html")
 
-
+# logout function
 @app.route("/logout")
 def logout():
     session.pop("user")
     return redirect(url_for("base"))
 
-
+# new report
 @app.route("/create-report", methods=["POST"])
 def createReport():
     if request.method == "POST":
@@ -138,7 +134,7 @@ def createReport():
     res = make_response(jsonify({"message": result.acknowledged}), 200)
     return res
 
-
+# show reports
 @app.route("/reports/<username>", methods=["GET", "POST"])
 def reports(username):
     username = users.find_one(
@@ -153,7 +149,7 @@ def reports(username):
 
     return redirect(url_for("login"))
 
-
+# update report 
 @app.route("/update-report", methods=["POST"])
 def updateReport():
     if request.method == "POST":
@@ -167,7 +163,7 @@ def updateReport():
     res = make_response(jsonify({"message": result.acknowledged}), 200)
     return res
 
-
+# delete report
 @app.route("/delete-report", methods=["POST"])
 def deleteReport():
     if request.method == "POST":
@@ -175,12 +171,10 @@ def deleteReport():
         result = reportsdb.delete_one(
             {'_id': ObjectId(req["_id"])})
 
-    print(result.deleted_count)
-
     res = make_response(jsonify({"message": result.deleted_count}), 200)
     return res
 
-
+# upload image to Cloudinary
 @app.route("/upload-image", methods=['POST'])
 @cross_origin()
 def upload_file():
@@ -196,6 +190,18 @@ def upload_file():
         upload_result = cloudinary.uploader.upload(file_to_upload)
 
     return jsonify(upload_result)
+
+
+# 404 Error
+@app.errorhandler(404)
+def four_oh_four_error(e):
+    return render_template('404.html', error=e), 404
+
+
+# 500 Error
+@app.errorhandler(500)
+def five_oh_oh_error(e):
+    return render_template('500.html', error=e), 500
 
 
 if __name__ == "__main__":

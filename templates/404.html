@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header class="auxillaryHeader">
+    <h1>Oh no</h1>
+</header>
+
+<section>
+
+    <article>
+        <a href="{{ url_for('base', username=session['user']) }}"><img class="slideInDown"
+            src="{{ url_for('static', filename='img/site/404.svg') }}" width="300" loading="lazy"
+            alt="404" />
+    </a>
+    </article>
+
+</section>
+
+{% endblock %}
