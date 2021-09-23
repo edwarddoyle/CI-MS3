@@ -291,7 +291,8 @@
   .regular-shadow{
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   }
-  
+/* CREDIT: Theodore K. 09/08/2016 Stackoverflow - https://stackoverflow.com/questions/38850419/how-to-create-multi-color-border-with-css  */
+ 
   .fancy-border
 {
 	-o-border-image: linear-gradient(to right, red 25%, orange 25%, yellow 50%,green 50%, blue 75%, indigo 75%, violet 95%) 5;
@@ -1138,6 +1139,7 @@ background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, F
 
 
          /*----------   Animations & Transitions   ----------*/
+  /* Acknowledgement - The App Guruz - https://www.theappguruz.com/tag-tools/web/CSSAnimations/ */
 
   .slideInDown {
     animation-name: slideInDown;
