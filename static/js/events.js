@@ -1,4 +1,4 @@
-import {getSiblings, toggleCard} from "./utils.js";
+import {toggleCard} from "./utils.js";
 
 const cards = document.querySelectorAll('.eventCard');
 

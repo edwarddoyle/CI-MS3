@@ -8,4 +8,3 @@ function togglerClick() {
   navToggler.classList.toggle("toggler-open");
   navMenu.classList.toggle("open");
 }
-
