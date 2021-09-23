@@ -38,15 +38,14 @@ reportsdb = mongo.db.reports
 def base():
     return render_template("index.html")
 
-# home - logged in
-@app.route("/home/<username>")
-def index(username):
 
-    if session["user"]:
-        username = users.find_one(
-            {"username": session["user"]})["username"]
+# home
+@app.route("/home")
+def index():
+    if "user" in session:
         return render_template("index.html", username=session["user"])
-    return render_template("index.html")
+    return redirect(url_for("base"))
+
 
 # get events
 @app.route("/events")
@@ -56,10 +55,12 @@ def get_events():
     length = events.count()
     return render_template("events.html", events=events, length=length)
 
+
 # contact
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+    
 
 # register
 @app.route("/register", methods=["GET", "POST"])
@@ -85,6 +86,7 @@ def register():
 
     return render_template("register.html")
 
+
 # login
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -108,11 +110,13 @@ def login():
 
     return render_template("login.html")
 
+
 # logout function
 @app.route("/logout")
 def logout():
     session.pop("user")
     return redirect(url_for("base"))
+    
 
 # new report
 @app.route("/create-report", methods=["POST"])
