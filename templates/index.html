@@ -10,12 +10,12 @@
                             <h1>Kilmacow Community Cleanup Group</h1>  
                             {% if not session.user %}
                             <p>We are a community based clean up group based in Kilmacow, South Kilkenny
-                            </p>
-                            <a href="{{ url_for('login') }}"><button class="button"><i class="icon-sign-in"></i>
-                                Log In / Register</button></a>
+                            </p><button class="button">
+                            <a href="{{ url_for('login') }}"><i class="icon-sign-in"></i>
+                                Log In / Register</a></button>
                             {% else %}
-                            <a href="{{ url_for('reports', username=session['user']) }}"><button class="button"><i class="icon-sign-in"></i>
-                                View Reports</button></a>
+                            <button class="button"><a href="{{ url_for('reports', username=session['user']) }}"><i class="icon-sign-in"></i>
+                                View Reports</a></button>
                             {% endif %}
 
                         </section>

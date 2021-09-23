@@ -3,38 +3,40 @@
 {% block content %}
 <section>
     <article>
-    <form id="registerForm" method="POST" action="{{url_for('register')}}" class="regular-shadow slideInRight"
-        autocomplete="off">
-        <ol>
-            <li>
-                <h3>Register</h3>
-                <p class="lightText"><a href="{{ url_for('login') }}">Have an account? <span>Sign in</span></a></p>
-            </li>
-            <li><label for="username">Username:</label>
-                <input type="text" name="username" id="username" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe90d;  eg. JoeBloggs1" required autofocus
-                    autocomplete="off"/></li>
- 
-            <li><label for="password">Password:</label>
-                <div class="passwordContainer">
-                <input type="password" name="password" id="registerPass" minlength="5" maxlength="15" patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe913;" required
-                    autocomplete="new-password" />
-                <i class="icon-eye"></i>
-            </div></li>
-                           <!-- flash messages credit https://stackoverflow.com/questions/44569040/change-color-of-flask-flash-messages-->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-            <p class="{{ category }}" id="formMsg">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+        <form id="registerForm" method="POST" action="{{url_for('register')}}" class="regular-shadow slideInRight"
+            autocomplete="off">
+            <ol>
+                <li>
+                    <h3>Register</h3>
+                    <p class="lightText"><a href="{{ url_for('login') }}">Have an account? <span>Sign in</span></a></p>
+                </li>
+                <li><label for="username">Username:</label>
+                    <input type="text" name="username" id="username" minlength="5" maxlength="15"
+                        patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe90d;  eg. JoeBloggs1" required autofocus
+                        autocomplete="off" /></li>
 
-            <li>
-                <button type="submit" id="regButton">REGISTER</button>
-            </li>
-        </ol>
-    </form>
-</article>
+                <li><label for="password">Password:</label>
+                    <div class="passwordContainer">
+                        <input type="password" name="password" id="registerPass" minlength="5" maxlength="15"
+                            patern="^[a-zA-Z0-9]{5,15}$" placeholder="&#xe913;" required autocomplete="new-password" />
+                        <i class="icon-eye"></i>
+                    </div>
+                </li>
+                <!-- credit: Raja Simon 15/06/17 https://stackoverflow.com/questions/44569040/change-color-of-flask-flash-messages-->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <p class="{{ category }}" id="formMsg">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <li>
+                    <button type="submit" id="regButton">REGISTER</button>
+                </li>
+            </ol>
+        </form>
+    </article>
 
 </section>
 

@@ -16,13 +16,13 @@
       eventually evolved into an annual clean up event open to all members of community. Today,
       the KCC organises multiple events and activities throughout the year including, the annual
       spring clean, flower planting days, painting days, river cleaning days and mini projects.
-  </p>
-  <p>
+    </p>
+    <p>
       The KCC has no formal committee or membership, we consider everyone who participates in
       anyway as equals. The KCC prides itself on its goals of inclusion and participation for as
       many community members from as many diverse backgrounds as possible. All events we organise
       are open to all members of the community, and we welcome new participants at all events.
-  </p>
+    </p>
 
   </article>
 
@@ -38,39 +38,34 @@
 {% if length > 0 %}
 <section class="events">
 
-      {% for event in events %}
-<!-- name, date, attendees, location, type, description-->
-      <div class="eventCard is-collapsed">
-        <div class="card__inner {{ event.type }}  regular-shadow">
-          <ol>
-            <li>{{ event.date }}</li>
-            <li>{{ event.name }}</li>
-          </ol>
-          </div>
-
-          <div class="card__expander">
-            <ol>
-              <li><i class="icon-address"></i><span>{{ event.location }}</span></li>
-              <li><i class="icon-clock"></i><span>{{ event.time }}</span></li>
-              <li><i class="icon-person"></i><span>{{ event.attendees }}</span></li>
-              <li><i class="icon-info"></i><span>{{ event.description }}</span></li>
-            </ol>           
-          </div>
+  {% for event in events %}
+  <div class="eventCard is-collapsed">
+    <div class="card__inner {{ event.type }}  regular-shadow">
+      <ol>
+        <li>{{ event.date }}</li>
+        <li>{{ event.name }}</li>
+      </ol>
     </div>
-      {% endfor %}
 
-{% else %}
-<img class="slideInDown suchEmpty" src="{{ url_for('static', filename='img/events.svg') }}" width="300" loading="lazy" alt="Kilmacow Community CLean Up Logo" />
-{% endif %}
+    <div class="card__expander">
+      <ol>
+        <li><i class="icon-address"></i><span>{{ event.location }}</span></li>
+        <li><i class="icon-clock"></i><span>{{ event.time }}</span></li>
+        <li><i class="icon-person"></i><span>{{ event.attendees }}</span></li>
+        <li><i class="icon-info"></i><span>{{ event.description }}</span></li>
+      </ol>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% else %}
+  <img class="slideInDown suchEmpty" src="{{ url_for('static', filename='img/events.svg') }}" width="300" loading="lazy"
+    alt="Kilmacow Community CLean Up Logo" />
+  {% endif %}
 </section>
 
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='js/events.js') }}" type="module" async></script> 
+<script src="{{ url_for('static', filename='js/events.js') }}" type="module" async></script>
 {% endblock %}
-
-
-
-
-

@@ -21,8 +21,9 @@ Scott Vinkle 13/04/2018 https://medium.com/@svinkle/why-let-someone-know-when-a-
 <div hidden>
     <span id="new-window-message"> - opens in a new window</span>
 </div>
+
     <nav class="regular-shadow">
-        <a href="{{ url_for('index', username=session['user']) }}"><img class="slideInDown"
+        <a href="{{ url_for('index')}}"><img class="slideInDown"
                 src="{{ url_for('static', filename='img/site/kcc.svg') }}" width="90" loading="lazy"
                 alt="Kilmacow Community CLean Up Logo" />
         </a>
@@ -37,8 +38,8 @@ Scott Vinkle 13/04/2018 https://medium.com/@svinkle/why-let-someone-know-when-a-
             <li><a href="{{ url_for('get_events') }}"><i class="icon-events"></i> Events </a></li>
             <li><a href="{{ url_for('contact') }}"><i class="icon-contact"></i> Contact </a></li>
         </ol>
-        <button class="slideInDown">
-            <span></span>
+        <button class="slideInDown" aria-label="nav button" title="nav button">
+            <span aria-hidden="true"></span>
         </button>
     </nav>
     <main>
