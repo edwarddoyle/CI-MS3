@@ -7,7 +7,7 @@
                                 {% if session.user %} 
                                 back {{ username }} 
                                 {% endif %} to the</p>
-                            <h1>Kilmacow Community Cleanup Group</h1>  
+                            <h2>Kilmacow Community Cleanup Group</h2>  
                             {% if not session.user %}
                             <p>We are a community based clean up group based in Kilmacow, South Kilkenny
                             </p><button class="button">
@@ -23,11 +23,12 @@
     
     
     {% if not session.user %}
-    <header class="auxillaryHeader">
-            <h1>About</h1>
-    </header>
+
     <section class="eventIntro">
-<article>    
+<article>  
+    <header class="auxillaryHeader">
+        <h1>About</h1>
+</header>  
 
 <p>The Kilmacow Community Clean up group began in 2009 as a response to the litter being dumped
                             along the roadside of the village and surrounding areas. It started with two community
