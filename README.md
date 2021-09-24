@@ -333,7 +333,7 @@ Click the settings tab and then click the Reveal Config Vars button and add the 
 
 To run this project locally there are two options through Github (clone or download). To clone or download, navigate to the repository, click the Code button and select Clone or Download:
 
-1. Clone: This option provides you with a URL that can be used in your local IDE. Use the 'git clone' command followed by the provided URL to create a clone of the project locally.
+1. Clone: This option provides you with a URL that can be used in your local IDE. Use the 'git clone' command followed by the provided URL to create a clone of the project locally. Create an env.py file and enter the envoirnment variables (Secret Key can be generated on [Random Key Generator](https://randomkeygen.com/), Cloudinary Keys can be retrieved after a cloudinary account has been setup[Cloudinary](https://cloudinary.com/),, MongoDB keys can be retrieved after a MongoDB account has been setup and a cluster has been setup and configured [MongoDB Schema](static/docs/schema.pdf)). Run pip install -r requirements.txt to install required packages. 
 
 2. Download: This option provides a .zip file that can be downloaded, extracted and deployed to a local webserver or edited in your IDE.
 
@@ -352,15 +352,20 @@ The licence for the logo is available [here](static/docs/logolicence.pdf). The l
 ### Code Snippets
 
 > CSS
-
 * [The App Guruz](https://www.theappguruz.com/tag-tools/web/CSSAnimations/) - slideInDown & slideInLeft animations
+* [Theodore K - 09/08/2016 Stackoverflow](https://stackoverflow.com/questions/38850419/how-to-create-multi-color-border-with-css) - multicoloured border
+* [Naila Ahmad - 12/01/2016 Codepen](https://codepen.io/nailaahmad/pen/LGRxWJ)
 
 > a11y
 * [Scott Vinkle 13/04/2018 Medium](https://medium.com/@svinkle/why-let-someone-know-when-a-link-opens-a-new-window-8699d20ed3b1) - a11y tips for screen readers
+
+> Flask
+* [Raja Simon - 15/06/17 Stackoverflow](https://stackoverflow.com/questions/44569040/change-color-of-flask-flash-messages) - Change colour of flash messages
 
 ### Acknowledgements
 
 > Stack Overflow and the Code Institute LMS proved to be invaluble resources
 > My employer for allowing me time to juggle a hectic work schedule and completing this project
+> My fellow students for their advice on Slack
 
 [Back to Top](<#table-of-contents>)
